@@ -13,20 +13,20 @@ import java.io.Serializable;
 @Builder
 public class SingleResult<ID extends Serializable, T extends BaseDto<ID>> extends BaseResponse implements Serializable {
 
-    private T baseDto;
+    private T data;
 
-    public SingleResult(boolean errorStatus, Integer responseStatus, String message, T baseDto) {
+    public SingleResult(boolean errorStatus, Integer responseStatus, String message, T data) {
         super(errorStatus, responseStatus, message);
-        this.baseDto = baseDto;
+        this.data = data;
     }
 
-    public SingleResult(boolean errorStatus, Integer responseStatus, T baseDto) {
+    public SingleResult(boolean errorStatus, Integer responseStatus, T data) {
         super(errorStatus, responseStatus);
-        this.baseDto = baseDto;
+        this.data = data;
     }
 
     public SingleResult(T model) {
-        this.baseDto = model;
+        this.data = model;
     }
 
     public SingleResult() {

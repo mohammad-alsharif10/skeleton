@@ -1,12 +1,12 @@
 package com.skeleton.security;
 
 
+import com.skeleton.model.Role;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
@@ -16,14 +16,17 @@ import java.security.*;
 import java.security.cert.CertificateException;
 import java.time.Instant;
 import java.util.Date;
+import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 import static io.jsonwebtoken.Jwts.parser;
 
 @Service
 public class JwtProvider {
 
+    private final String ROLES_KEY = "roles";
     private KeyStore keyStore;
-
     @Value("${jwt.expiration.time}")
     private Long jwtExpirationInMillis;
 
@@ -40,10 +43,14 @@ public class JwtProvider {
 
     }
 
-    public String generateToken(Authentication authentication) {
-        User principal = (User) authentication.getPrincipal();
+    public String generateToken(String username, List<Role> roles) {
+        Claims claims = Jwts.claims().setSubject(username);
+        claims.put(ROLES_KEY, roles.stream().map(role -> new SimpleGrantedAuthority(role.getAuthority()))
+                .filter(Objects::nonNull)
+                .collect(Collectors.toList()));
         return Jwts.builder()
-                .setSubject(principal.getUsername())
+                .setClaims(claims)
+                .setSubject(username)
                 .setIssuedAt(Date.from(Instant.now()))
                 .signWith(getPrivateKey())
                 .setExpiration(Date.from(Instant.now().plusMillis(jwtExpirationInMillis)))

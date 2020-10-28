@@ -17,8 +17,6 @@ public class UserDto extends BaseDto<Long> {
     private String password;
 
 
-    private String email;
-
     private Instant created;
 
     private boolean enabled;

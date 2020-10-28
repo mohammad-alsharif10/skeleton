@@ -3,10 +3,11 @@ package com.skeleton.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
+import javax.validation.constraints.Email;
 import java.time.Instant;
+import java.util.ArrayList;
+import java.util.List;
 
 
 @Entity
@@ -19,11 +20,9 @@ import java.time.Instant;
 public class User extends BaseModel<Long> {
 
 
+    @Email
     @Column(name = "username", unique = true)
     private String username;
-
-    @Column(name = "email", unique = true)
-    private String email;
 
 
     @Column(name = "password")
@@ -33,5 +32,13 @@ public class User extends BaseModel<Long> {
     private Instant created;
 
     private boolean enabled;
+
+    @OneToMany(
+            mappedBy = "user",
+            cascade = CascadeType.ALL,
+            targetEntity = UserRole.class,
+            fetch = FetchType.EAGER
+    )
+    private List<UserRole> userRoles = new ArrayList<>();
 
 }

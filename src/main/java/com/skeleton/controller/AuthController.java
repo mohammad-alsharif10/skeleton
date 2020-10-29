@@ -29,7 +29,8 @@ public class AuthController {
 //        return authService.verifyAccount(token);
 //    }
 
-    @RequestMapping(value = "/login", method = RequestMethod.POST)
+    @CrossOrigin(origins = ("http://localhost:4200"))
+    @RequestMapping(value = "/signin", method = RequestMethod.POST)
     public ResponseEntity<SingleResult<Long, AuthenticationResponse>> login(@RequestBody LoginDto loginRequest) {
         return authService.login(loginRequest);
     }

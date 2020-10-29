@@ -33,6 +33,16 @@ public class User extends BaseModel<Long> {
 
     private boolean enabled;
 
+    private String firstName;
+
+    private String lastName;
+
+    private String faculty;
+
+    private String gender;
+
+    private String university;
+
     @OneToMany(
             mappedBy = "user",
             cascade = CascadeType.ALL,

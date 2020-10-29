@@ -156,6 +156,7 @@ public class AuthService {
                     .username(loginDto.getUsername())
                     .build();
             singleResult = new SingleResult<>(false, 200, "Login Success", authenticationResponse);
+            return new ResponseEntity<>(singleResult, HttpStatus.OK);
         } catch (AuthenticationException arithmeticException) {
             log.info("Log in failed for user {}", loginDto.getUsername());
             singleResult = new SingleResult<>(
@@ -163,8 +164,9 @@ public class AuthService {
                     404,
                     "Invalid Login",
                     null);
+            return new ResponseEntity<>(singleResult, HttpStatus.NOT_FOUND);
         }
-        return new ResponseEntity<>(singleResult, HttpStatus.OK);
+
     }
 
 

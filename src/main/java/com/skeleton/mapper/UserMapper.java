@@ -4,6 +4,8 @@ package com.skeleton.mapper;
 import com.skeleton.dto.UserDto;
 import com.skeleton.model.User;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
+import org.mapstruct.Mappings;
 
 import java.util.List;
 
@@ -11,6 +13,9 @@ import java.util.List;
 public interface UserMapper extends BaseMapper<Long, UserDto, User> {
 
     @Override
+    @Mappings({
+            @Mapping(target = "password", ignore = true)
+    })
     UserDto toBaseDto(User baseModelPram);
 
     @Override

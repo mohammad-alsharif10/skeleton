@@ -157,7 +157,7 @@ public class AuthService {
                     .build();
             singleResult = new SingleResult<>(false, 200, "Login Success", authenticationResponse);
             return new ResponseEntity<>(singleResult, HttpStatus.OK);
-        } catch (AuthenticationException arithmeticException) {
+        } catch (AuthenticationException authenticationException) {
             log.info("Log in failed for user {}", loginDto.getUsername());
             singleResult = new SingleResult<>(
                     true,

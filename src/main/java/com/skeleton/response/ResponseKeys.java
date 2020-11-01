@@ -10,6 +10,9 @@ public class ResponseKeys {
     public static final String UNKNOWN_ERROR = "UNKNOWN_ERROR";
     public static final String OK = "OK";
     public static final String EMPTY_LIST = "the search query returns empty set";
+    public static final String SORTED_LIST = "the search query returns sorted set";
+    public static final String UNSORTED_LIST = "the search query returns unsorted set ";
+
 
     public static final String ERROR_SIGNING_IN = "ERROR_SIGNING_IN";
     public static final String INVALID_ACCESS_TOKEN = "INVALID_ACCESS_TOKEN";

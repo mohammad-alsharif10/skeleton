@@ -35,8 +35,8 @@ public class JwtProvider {
     public void init() {
         try {
             keyStore = KeyStore.getInstance("JKS");
-            InputStream resourceAsStream = getClass().getResourceAsStream("/security.jks");
-            keyStore.load(resourceAsStream, "password".toCharArray());
+            InputStream resourceAsStream = getClass().getResourceAsStream("/keystore.jks");
+            keyStore.load(resourceAsStream, "123456".toCharArray());
         } catch (KeyStoreException | CertificateException | NoSuchAlgorithmException | IOException e) {
             throw new Exception("Exception occurred while loading keystore", e);
         }
@@ -69,7 +69,7 @@ public class JwtProvider {
     @SneakyThrows
     private PrivateKey getPrivateKey() {
         try {
-            return (PrivateKey) keyStore.getKey("security", "password".toCharArray());
+            return (PrivateKey) keyStore.getKey("keystore", "123456".toCharArray());
         } catch (KeyStoreException | NoSuchAlgorithmException | UnrecoverableKeyException e) {
             throw new Exception("Exception occurred while retrieving public key from keystore", e);
         }
@@ -83,7 +83,7 @@ public class JwtProvider {
     @SneakyThrows
     private PublicKey getPublicKey() {
         try {
-            return keyStore.getCertificate("security").getPublicKey();
+            return keyStore.getCertificate("keystore").getPublicKey();
         } catch (KeyStoreException e) {
             throw new Exception("Exception occurred while " +
                     "retrieving public key from keystore", e);

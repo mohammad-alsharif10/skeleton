@@ -5,19 +5,15 @@ import com.skeleton.database.UserRepository;
 import com.skeleton.model.User;
 import com.skeleton.model.UserRole;
 import lombok.AllArgsConstructor;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Collection;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
-import static java.util.Collections.singletonList;
 import static org.springframework.security.core.userdetails.User.withUsername;
 
 @Service
@@ -42,4 +38,15 @@ public class UserDetailsServiceImpl implements UserDetailsService {
                 .build();
     }
 
+    public String username() {
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        String username;
+
+        if (principal instanceof UserDetails) {
+            username = ((UserDetails) principal).getUsername();
+        } else {
+            username = principal.toString();
+        }
+        return username;
+    }
 }
